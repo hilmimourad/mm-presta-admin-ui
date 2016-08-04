@@ -1,0 +1,157 @@
+<div class="row">
+    <div class="col-md-12" style="text-align:center">
+        <h1>Caracteristiques produits</h1>
+    </div>
+</div>
+
+
+
+<div class="row marketing">
+    <div class="jumbotron">
+        <h3>List des caracteristiques produit</h3>
+        <div class="row" style="text-align:left;">
+            <h5 style="text-align:center;">Nouvelle caracteristique</h5>
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" for="caracteristiqueFormLibelle">Libelle</label>
+                    <input class="form-control" id="caracteristiqueFormLibelle" ng-model="caracteristiqueForm.libelle" type="text">
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group label-floating">
+                    <label class="control-label" for="caracteristiqueFormType">Type</label>
+                    <select ng-model="caracteristiqueForm.type" id="caracteristiqueFormType" class="form-control">
+                        <option ng-repeat="type in types" value="{{type.id}}">{{type.libelle}}</option>
+                    </select>
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group label-floating">
+                    <label class="control-label" for="caracteristiqueFormDescription">Description:</label>
+                    <textarea rows="3" class="form-control" id="caracteristiqueFormDescription" ng-model="caracteristiqueForm.description" type="text">
+                    </textarea>
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <div class="col-md-12" style="text-align:center;">
+                <a class="btn btn-success btn-raised btn-fab" disabled="true" data-ng-disabled="caracteristiqueFormEmpty()" ng-click="createCaracteristique()">
+                    <i class="material-icons">add</i></a>
+            </div>
+        </div>
+        <br><br>
+
+        <div class="list-group">
+            <div ng-repeat="caracteristique in caracteristiques">
+                <div class="list-group-item">
+                    <div class="row-action-primary">
+                        <i class="material-icons">&#xE886;</i>
+                    </div>
+                    <div class="row-content">
+                        <div class="action-secondary">
+                            <a ng-click="startEditing($index)" class="btn btn-sm btn-success"><i class="material-icons" style="color:green;">edit</i>   </a>
+                            <a class="btn btn-sm btn-danger" ng-click="deleteCaracteristique($index)"><i class="material-icons" style="color:red;">&#xE16C;</i></a>
+                        </div>
+                        <h4 class="list-group-item-heading" style="text-align:left;">{{caracteristique.libelle}}</h4>
+                        <h6 style="text-align:left;">{{caracteristique.description}}</h6>
+                    </div>
+                </div>
+                <div class="list-group-separator"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="deleteCaracteristiqueModal" class="modal fade" role="dialog" data-keyboard="true" data-backdrop="false fade">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h3><i class="fa fa-warning"></i> ATTENTION</h3>
+
+                </div>
+                <div class="modal-body">
+                    <h4>En supprimant la caracteristique <strong>{{caracteristiqueToDelete.libelle}}</strong> vous risquez de
+                        supprimer les produits associés, confirmez-vous ?</h4>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-6 col-xs-12" style="text-align:left;">
+                        <a class="btn btn-danger btn-raised" ng-click="acceptDeleteCaracteristique()">
+             Confirmer
+            </a>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <a class="btn btn-default btn-raised" ng-click="cancelDeleteCaracteristique()">
+             Annuler
+            </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="editCaracteristiqueModal" class="modal fade" role="dialog" data-keyboard="true" data-backdrop="false fade">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h3><i class="fa fa-warning"></i> Editer la caracteristique: <strong>{{caracteristiqueToEdit.libelle}}</strong></h3>
+                    <h5>Type: {{caracteristiqueToEdit.type.libelle}}</h5>
+                    <h6>Description: {{caracteristiqueToEdit.description}}</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="caracteristiqueEditFormLibelle">Nouveau libelle</label>
+                            <input class="form-control" id="caracteristiqueEditFormLibelle" ng-model="caracteristiqueEditForm.libelle" type="text">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="caracteristiqueEditFormType">Nouveau type</label>
+                            <select ng-model="caracteristiqueEditForm.type" id="caracteristiqueEditFormType" class="form-control">
+                                <option ng-repeat="type in types" value="{{type.id}}">{{type.libelle}}</option>
+                            </select>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="caracteristiqueEditFormDescription">Nouvelle Description:</label>
+                            <textarea rows="3" class="form-control" id="caracteristiqueEditFormDescription" ng-model="caracteristiqueEditForm.description" 
+                            type="text">{{caracteristiqueToEdit.description}}</textarea>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-6 col-xs-12" style="text-align:left;">
+                        <a class="btn btn-danger btn-raised" ng-click="editCaracteristique()" disabled="true" data-ng-disabled="caracteristiqueEditFormEmpty()">
+             Confirmer
+            </a>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <a class="btn btn-default btn-raised" ng-click="cancelCaracteristiqueEdit()">
+             Annuler
+            </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+     $(function() { $.material.init(); });
+</script>

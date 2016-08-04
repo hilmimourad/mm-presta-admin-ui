@@ -5,8 +5,13 @@
   padding: 0.2em 0;
 }
 
+html *{
+  outline:0;
+}
+
 body {
   padding: 0;
+  padding-top:30px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -130,3 +135,23 @@ body {
   opacity: 1;
   max-width: 50px; /* More than it will ever come, notice that this affects on animation duration */
 }
+
+
+
+.navbar li {
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

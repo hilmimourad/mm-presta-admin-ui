@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-md-12" style="text-align:center">
+        <h1>Types caracteristiques</h1>
+    </div>
+</div>
+
+
+
+<div class="row marketing">
+    <div class="jumbotron">
+        <h3>List des types de caracteristiques produit</h3>
+        <div class="row" style="text-align:left;">
+            <h5 style="text-align:center;">Nouveau type</h5>
+            <div class="col-md-10">
+                <div class="form-group label-floating">
+                    <label class="control-label" for="typeFormLibelle">Libelle</label>
+                    <input class="form-control" id="typeFormLibelle" ng-model="typeForm.libelle" type="text">
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-success btn-raised btn-fab" disabled="true" data-ng-disabled="typeFormEmpty()" ng-click="createType()">
+                    <i class="material-icons">add</i></a>
+            </div>
+        </div>
+        <br><br>
+
+        <div class="list-group">
+            <div ng-repeat="type in types">
+                <div class="list-group-item">
+                    <div class="row-action-primary">
+                        <i class="material-icons">&#xE886;</i>
+                    </div>
+                    <div class="row-content">
+                        <div class="action-secondary">
+                            <a ng-click="startEditing($index)" class="btn btn-sm btn-success"><i class="material-icons" style="color:green;">edit</i>   </a>
+                            <a class="btn btn-sm btn-danger" ng-click="deleteType($index)"><i class="material-icons" style="color:red;">&#xE16C;</i></a>
+                        </div>
+                        <h4 class="list-group-item-heading" style="text-align:left;">{{type.libelle}}</h4>
+                    </div>
+                </div>
+                <div class="list-group-separator"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="deleteTypeModal" class="modal fade" role="dialog" data-keyboard="true" data-backdrop="false fade">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h3><i class="fa fa-warning"></i> ATTENTION</h3>
+
+                </div>
+                <div class="modal-body">
+                    <h4>En supprimant le type <strong>{{typeToDelete.libelle}}</strong> vous risquez de supprimer les caracteristiques
+                        et produits associés, confirmez-vous ?</h4>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-6 col-xs-12" style="text-align:left;">
+                        <a class="btn btn-danger btn-raised" ng-click="acceptDeleteType()">
+             Confirmer
+            </a>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <a class="btn btn-default btn-raised" ng-click="cancelDeleteType()">
+             Annuler
+            </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="editTypeModal" class="modal fade" role="dialog" data-keyboard="true" data-backdrop="false fade">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h3><i class="fa fa-warning"></i> Editer le type: <strong>{{typeToEdit.libelle}}</strong></h3>
+
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="form-group label-floating">
+                            <label class="control-label" for="typeEditFormLibelle">Nouveau libelle</label>
+                            <input class="form-control" id="typeEditFormLibelle" ng-model="typeEditForm.libelle" type="text">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-6 col-xs-12" style="text-align:left;">
+                        <a class="btn btn-danger btn-raised" ng-click="editType()" disabled="true" data-ng-disabled="typeEditFormEmpty()" >
+             Confirmer
+            </a>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <a class="btn btn-default btn-raised" ng-click="cancelTypeEdit()">
+             Annuler
+            </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+     $(function() { $.material.init(); });
+</script>
