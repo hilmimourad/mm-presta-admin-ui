@@ -8,19 +8,19 @@
 
 
 <div class="row">
-  <div class="col-md-12 col-xs-12">
+  <div class="col-md-6 col-xs-12">
     <div class="jumbotron">
       <h3>Infos</h3>
       <div class="row" style="text-align:left;">
         <h5 style="text-align:center;">Editer les infos de la famille</h5>
-        <div class="col-md-6 col-xs-12">
+        <div class="col-md-12 col-xs-12">
           <div class="form-group label-floating">
             <label class="control-label" for="familleCode">Code (Inchangeable) </label>
             <input class="form-control" disabled="true" id="familleCode" ng-model="familleForm.code" value="{{familleForm.code}}" type="text">
             <p class="help-block"></p>
           </div>
         </div>
-        <div class="col-md-6 col-xs-12">
+        <div class="col-md-12 col-xs-12">
           <div class="form-group label-floating">
             <label class="control-label" for="familleLibelle">Libelle</label>
             <input class="form-control" id="familleLibelle" ng-model="familleForm.libelle" value="{{familleForm.libelle}}" type="text">
@@ -37,6 +37,7 @@
       </div>
 
       <div class="list-group">
+        <h3>Sous familles</h3>
         <div ng-repeat="famille in sousFamilles">
           <div class="list-group-item">
             <div class="row-action-primary">
@@ -53,7 +54,169 @@
           <div class="list-group-separator"></div>
         </div>
       </div>
+    </div>
+  </div>
 
+  <div class="col-md-6 col-xs-12">
+    <div class="jumbotron">
+      <h3>Produits</h3>
+      <div class="row" style="text-align:left;">
+        <h5 style="text-align:center;">Ajout d'un nouveau produit</h5>
+        <div class="col-md-12 col-xs-12">
+          <div class="form-group label-floating">
+            <label class="control-label" for="produitLibelle">Libelle</label>
+            <input class="form-control" id="produitLibelle" ng-model="produitForm.libelle" type="text">
+            <p class="help-block"></p>
+          </div>
+        </div>
+        <div class="col-md-12 col-xs-12">
+          <div class="form-group label-floating">
+            <label class="control-label" for="produitDescription">Description</label>
+            <textarea class="form-control" id="produitDescription" ng-model="produitForm.description"></textarea>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        <div class="col-md-8 col-xs-8">
+          <div class="form-group label-floating">
+            <label class="control-label" for="caracteristiques">Caracteristique</label>
+            <select class="form-control" id="caracteristiques" ng-model="produitForm.caracteristique">
+                  <option ng-repeat="caracteristique in caracteristiques" value="{{$index}}">{{caracteristique.libelle}}</option>
+              </select>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        <div class="col-md-1 col-xs-1">
+          <a style=" text-align:center;" class="btn btn-raised btn-success btn-fab" ng-click="addCaracteristique()">
+            <i class="material-icons">add</i>
+          </a>
+        </div>
+        <div class="col-md-12 col-xs-12" style=" text-align:center;">
+          List des caracteristiques ajoutées
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="caracteristique in produitForm.caracteristiques">
+              <span class="badge"><a  ng-click="removeCaracteristique($index)">
+                x
+            </a></span> {{caracteristique.caracteristiqueProduit.libelle}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-12 col-xs-12" style=" text-align:center;">
+          <a style=" text-align:center;" ng-disabled="produitFormEmpty()" disabled="true" class="btn btn-raised btn-success btn-fab" ng-click="addProduit()">
+            <i class="material-icons">done</i>
+          </a>
+        </div>
+      </div>
+
+      <div class="list-group">
+        <h3>Liste des produits</h3>
+        <div ng-repeat="produit in produits">
+          <div class="list-group-item">
+            <div class="row-action-primary">
+              <i class="material-icons">&#xE886;</i>
+            </div>
+            <div class="row-content">
+              <div class="action-secondary">
+                <a href="#/produit/{{produit.id}}/edit" class="btn btn-sm btn-success"><i class="material-icons" style="color:green;">edit</i>   </a>
+                <a class="btn btn-sm btn-danger" ng-click="deleteProduit($index)"><i class="material-icons" style="color:red;">&#xE16C;</i></a>
+              </div>
+              <h4 class="list-group-item-heading" style="text-align:left;">{{produit.libelle}}</h4>
+              <h6 class="" style="text-align:left;">{{produit.description}}</h6>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div id="deleteProduitModal" class="modal fade" role="dialog" data-keyboard="true" data-backdrop="false fade">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <form ng-controller="loginCtrl">
+        <div class="modal-header">
+          <h3><i class="fa fa-warning"></i> ATTENTION</h3>
+
+        </div>
+        <div class="modal-body">
+          <h4>Vous allez supprimer le produit <strong>{{produitToDelete.libelle}}</strong>, confirmez-vous ?</h4>
+        </div>
+        <div class="modal-footer">
+          <div class="col-md-6 col-xs-12" style="text-align:left;">
+            <a class="btn btn-danger btn-raised btn-fab" ng-click="acceptDeleteProduit()">
+              <i class="material-icons">done</i>
+            </a>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <a class="btn btn-default btn-raised btn-fab" ng-click="cancelDeleteProduit()">
+              <i class="material-icons">clear</i>
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="addCaracteristiqueModal" class="modal fade" role="dialog" data-keyboard="true" data-backdrop="false fade">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h3>Ajout de la caracterisitque: {{caracteristiqueToAdd.libelle}}</h3>
+          <h6>Description: {{caracteristiqueToAdd.description}}</h6>
+
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group label-floating">
+              <label class="control-label" for="caracteristiqueDefaut">Valeur par défaut</label>
+              <input class="form-control" id="caracteristiqueDefaut" ng-model="caracteristiqueForm.defaut" type="number">
+              <p class="help-block"></p>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group label-floating">
+              <label class="control-label" for="caracteristiqueMax">Valeur max</label>
+              <input class="form-control" id="caracteristiqueMax" ng-model="caracteristiqueForm.max" type="number">
+              <p class="help-block"></p>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group label-floating">
+              <label class="control-label" for="caracteristiqueDefaut">Valeur min</label>
+              <input class="form-control" id="caracteristiqueMin" ng-model="caracteristiqueForm.min" type="number">
+              <p class="help-block"></p>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group label-floating">
+              <label class="control-label" for="caracteristiqueTarif">Tarif</label>
+              <input class="form-control" id="caracteristiqueTarif" ng-model="caracteristiqueForm.tarif" type="number">
+              <p class="help-block"></p>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <div class="col-md-6 col-xs-12" style="text-align:left;">
+            <a class="btn btn-success btn-raised btn-fab" ng-click="acceptAddCaracteristique()">
+              <i class="material-icons">done</i>
+            </a>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <a class="btn btn-default btn-raised btn-fab" ng-click="cancelAddCaracteristique()">
+              <i class="material-icons">clear</i>
+            </a>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

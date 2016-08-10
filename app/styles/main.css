@@ -143,6 +143,14 @@ body {
 }
 
 
+.badge:hover{
+  cursor:pointer;
+}
+
+.badge *{
+  color:white;
+}
+
 
 
 
